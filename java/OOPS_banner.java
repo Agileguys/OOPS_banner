@@ -1,4 +1,4 @@
-public class uc4 {
+public class OOPS_banner {
     public static void main(String[] args){
         String[] lines = new String[7];
         lines[0] = String.join("  ", "  ***  ", "  ***  ", "*****  ", " ***** ");
