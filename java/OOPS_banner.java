@@ -1,61 +1,41 @@
 public class OOPS_Banner {
-  // Inner static class to encapsulate character-to-pattern mapping
-    static class CharacterPatternMap {
-        private Character character;
-        private String[] pattern;
-
-        public CharacterPatternMap(Character character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
-
-        public Character getCharacter() { 
-            return character; 
-        }
-
-        public String[] getPattern() { 
-            return pattern; 
-        }
-    }
-
-    public static void main(String[] args) {
-        // Initialize the array of pattern objects
-        CharacterPatternMap[] charMaps = createCharacterPatternMaps();
-        // Define message and print
-        String message = "OOPS";
-        printMessage(message, charMaps);
-    }
-
-    public static CharacterPatternMap[] createCharacterPatternMaps() {
-        // Create objects for O, P, S and Space [cite: 887-890]
-        return new CharacterPatternMap[] {
-            new CharacterPatternMap('O', new String[]{"  *** ", " ** ** ", "** **", "** **", "** **", " ** ** ", "  *** "}),
-            new CharacterPatternMap('P', new String[]{"****** ", "** **", "** **", "****** ", "** ", "** ", "** "}),
-            new CharacterPatternMap('S', new String[]{" ***** ", "** ", "** ", " ***** ", "     **", "     **", " ***** "}),
-            new CharacterPatternMap(' ', new String[]{"       ", "       ", "       ", "       ", "       ", "       ", "       "})
-        };
-    }
-
-    public static String[] getCharacterPattern(char ch, CharacterPatternMap[] charMaps) {
-        // Linear search to find matching character pattern [cite: 893-895]
-        for (CharacterPatternMap map : charMaps) {
-            if (map.getCharacter().equals(ch)) {
-                return map.getPattern();
-            }
-        }
-        return getCharacterPattern(' ', charMaps); // Return space if not found [cite: 978]
-    }
-
-    public static void printMessage(String message, CharacterPatternMap[] charMaps) {
-        // Loop through each of the 7 lines of the banner height [cite: 898]
-        for (int i = 0; i < 7; i++) {
-            StringBuilder sb = new StringBuilder();
-            for (char ch : message.toCharArray()) {
-                // Get pattern for character and append the specific line
-                String[] pattern = getCharacterPattern(ch, charMaps);
-                sb.append(pattern[i]).append(" "); 
-            }
-            System.out.println(sb.toString());
-        }
-    }
+  public static void main(String[] args) {
+          // Initialize the HashMap collection
+          HashMap<Character, String[]> charMap = createCharacterMap();
+          String message = "OOPS";
+          // Call display function
+          displayBanner(message, charMap);
+      }
+  
+      public static HashMap<Character, String[]> createCharacterMap() {
+          HashMap<Character, String[]> charMap = new HashMap<>();
+          
+          // Populate patterns into the Map [cite: 1142-1144]
+          charMap.put('O', new String[]{"  *** ", " ** ** ", "** **", "** **", "** **", " ** ** ", "  *** "});
+          charMap.put('P', new String[]{"****** ", "** **", "** **", "****** ", "** ", "** ", "** "});
+          charMap.put('S', new String[]{" ***** ", "** ", "** ", " ***** ", "     **", "     **", " ***** "});
+          charMap.put(' ', new String[]{"       ", "       ", "       ", "       ", "       ", "       ", "       "});
+          
+          return charMap;
+      }
+  
+      public static void displayBanner(String message, HashMap<Character, String[]> charMap) {
+          // Determine pattern height (assuming all characters are 7 lines high) [cite: 1155]
+          int patternHeight = 7;
+  
+          // Iterate line by line to build the banner horizontally [cite: 1096]
+          for (int line = 0; line < patternHeight; line++) {
+              StringBuilder sb = new StringBuilder();
+              for (char ch : message.toCharArray()) {
+                  // Look up the pattern in the HashMap [cite: 1101]
+                  String[] pattern = charMap.get(ch);
+                  if (pattern == null) {
+                      pattern = charMap.get(' '); // Default to space if char not found
+                  }
+                  sb.append(pattern[line]).append(" "); 
+              }
+              // Print the assembled line to the console [cite: 1103]
+              System.out.println(sb.toString());
+          }
+      }
 }
